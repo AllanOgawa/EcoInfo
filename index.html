@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoInfo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: gainsboro;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha */
+        }
+
+        .btn {
+            padding: 15px 30px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .graph-container {
+            display: none; /* Inicialmente esconde todos os gráficos */
+            text-align: center;
+            max-width: 800px; /* Limita a largura para melhorar a leitura */
+            margin-top: 20px;
+        }
+
+        .graph-container.active {
+            display: block; /* Mostra o gráfico quando a classe 'active' é aplicada */
+        }
+
+        select {
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px; /* Adiciona margem para separar do restante */
+            display: block; /* Garante que o select esteja visível por padrão */
+        }
+
+        .graph-container:not(#consumo_por_ano_select) select {
+            display: none; /* Esconde o select em todos os gráficos exceto 'consumo_por_ano' */
+        }
+
+        .graph-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .btn-group {
+                flex-direction: column; /* Muda para coluna em telas menores */
+                align-items: center; /* Alinha os botões centralmente na coluna */
+            }
+
+            .btn {
+                width: 100%; /* Botões ocupam a largura total */
+            }
+        }
+        p{
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Cabeçalho com título -->
+    <div class="header">
+        <h1>EcoInfo</h1>
+    </div>
+
+    <!-- Grupo de botões -->
+    <div class="btn-group">
+        <button class="btn" onclick="mostrarGrafico('proporcao')">Gráfico de Proporção</button>
+        <button class="btn" onclick="mostrarGrafico('distribuicao_consumo')">Distribuição de Consumo</button>
+        <button class="btn" onclick="mostrarGrafico('consumo_por_ano')">Consumo por Ano</button>
+        <button class="btn" onclick="mostrarGrafico('consumo_por_consumidor')">Consumo por Consumidor</button>
+        <button class="btn" onclick="mostrarGrafico('distribuicao_estado')">Distribuição por Estado</button>
+        <button class="btn" onclick="mostrarGrafico('consumo_parana')">Consumo no Paraná</button>
+    </div>
+
+    <!-- Seleção de ano para o gráfico de Consumo por Ano -->
+    <div class="graph-container" id="consumo_por_ano_select">
+        <select id="ano" onchange="mostrarGrafico('consumo_por_ano')">
+            <option value="2010">2010</option>
+            <option value="2020">2020</option>
+        </select>
+    </div>
+
+    <!-- Divs com os gráficos -->
+    <!-- Divs com os gráficos -->
+    <div id="proporcao" class="graph-container">
+        <h2>Gráfico de Proporção</h2>
+        <img src="graficos/proporcao_tipoConsumidor.png" alt="Gráfico de Proporção">
+        <p>O gráfico de proporção mostra a distribuição do consumo de energia entre diferentes tipos de consumidores (residencial, comercial, industrial). Ele permite identificar qual segmento contribui mais significativamente para o consumo total.</p>
+    </div>
+
+    <div id="distribuicao_consumo" class="graph-container">
+        <h2>Distribuição de Consumo</h2>
+        <img src="graficos/distribuicao_consumo.png" alt="Distribuição de Consumo">
+        <p>O gráfico de distribuição de consumo mostra como o consumo de energia está distribuído ao longo de um período específico. É útil para identificar padrões de consumo ao longo do tempo e variações significativas.</p>
+    </div>
+
+    <div id="consumo_por_ano" class="graph-container">
+        <h2>Consumo por Ano</h2>
+        <div id="grafico2010" class="graph-subcontainer">
+            <img src="graficos/consumo2010_estado.png" alt="Consumo Total por Ano - 2010">
+            <p>Análise para 2010: O gráfico mostra como o consumo de energia foi distribuído entre os estados brasileiros em 2010. É possível observar diferenças regionais significativas no consumo.</p>
+        </div>
+        <div id="grafico2020" class="graph-subcontainer">
+            <img src="graficos/consumo2020_estado.png" alt="Consumo Total por Ano - 2020">
+            <p>Análise para 2020: O gráfico evidencia a mudança no padrão de consumo de energia entre os estados brasileiros em 2020, comparado a décadas anteriores, refletindo possíveis mudanças socioeconômicas e políticas.</p>
+        </div>
+    </div>
+
+    <div id="consumo_por_consumidor" class="graph-container">
+        <h2>Consumo por Consumidor</h2>
+        <img src="graficos/consumo_consumidor.png" alt="Consumo por Consumidor">
+        <p>O gráfico de consumo por consumidor compara os padrões de consumo entre diferentes tipos de consumidores (residencial, comercial, industrial). É útil para identificar comportamentos de consumo distintos entre esses grupos.</p>
+    </div>
+
+    <div id="distribuicao_estado" class="graph-container">
+        <h2>Distribuição por Estado</h2>
+        <img src="graficos/distribuicao_uf.png" alt="Distribuição por Estado">
+        <p>O gráfico de distribuição por estado mostra como o consumo de energia varia entre os estados brasileiros. Ele ajuda a identificar estados com maior e menor consumo e analisar possíveis motivos para essas diferenças.</p>
+    </div>
+
+    <div id="consumo_parana" class="graph-container">
+        <h2>Consumo no Paraná</h2>
+        <img src="graficos/consumo_pr.png" alt="Consumo no Paraná">
+        <p>O gráfico de consumo no Paraná destaca o padrão de consumo de energia específico desse estado. É útil para analisar políticas energéticas regionais e identificar tendências de consumo ao longo do tempo.</p>
+    </div>
+</div>
+
+<!-- Script JavaScript -->
+<script>
+    function mostrarGrafico(id) {
+        var anoSelecionado = document.getElementById('ano').value;
+
+        // Esconde todos os gráficos
+        var graficos = document.getElementsByClassName('graph-container');
+        for (var i = 0; i < graficos.length; i++) {
+            graficos[i].classList.remove('active');
+        }
+
+        // Mostra o gráfico selecionado
+        var graficoSelecionado = document.getElementById(id);
+        graficoSelecionado.classList.add('active');
+
+        // Mostra o select apenas se o ID for 'consumo_por_ano'
+        if (id === 'consumo_por_ano') {
+            document.getElementById('consumo_por_ano_select').style.display = 'block';
+        } else {
+            document.getElementById('consumo_por_ano_select').style.display = 'none';
+        }
+
+        // Mostra o gráfico correspondente ao ano selecionado
+        if (id === 'consumo_por_ano') {
+            document.getElementById('grafico2010').style.display = 'none';
+            document.getElementById('grafico2020').style.display = 'none';
+            document.getElementById('grafico' + anoSelecionado).style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
